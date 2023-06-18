@@ -8,6 +8,7 @@ public class NeuralNetwork1 {
 		/*Inner Class Variables*/
 		private int weight;
 		private int bias;
+		private int sigmoid;
 		private int z;
 		private int x;
 		
@@ -15,6 +16,7 @@ public class NeuralNetwork1 {
 		public Node(int weight, int bias) {
 			this.weight = weight;
 			this.bias = bias;
+			this.sigmoid = 2;
 		}
 		
 		public Node(int x) {
@@ -25,6 +27,18 @@ public class NeuralNetwork1 {
 		public int activation(int x1, int x2) {
 			z = this.weight*x1 + this.weight*x2 - bias; //activation function
 			return (int)Math.round((1/(1 + Math.exp(-1*z)))); //sigmoid function
+		}
+		
+		public int getX() {
+			return this.x;
+		}
+		
+		public int getSigmoid() {
+			return this.sigmoid;
+		}
+		
+		public void setSigmoid(int sigmoid) {
+			this.sigmoid = sigmoid;
 		}
 		
 	}
@@ -69,9 +83,16 @@ public class NeuralNetwork1 {
 			nodeArr[0] = X1;
 			nodeArr[1] = X2;
 			
+			//input leyer array
+			//hidden layer array
+			//output array
+			
 			/*Forward Propagation*/
 			
-			
+			nodeArr[2].setSigmoid(nodeArr[2].activation(nodeArr[0].getX(), nodeArr[1].getX()));
+			nodeArr[3].setSigmoid(nodeArr[3].activation(nodeArr[0].getX(), nodeArr[1].getX()));
+			nodeArr[4].setSigmoid(nodeArr[4].activation(nodeArr[2].getSigmoid(), nodeArr[3].getSigmoid()));
+			System.out.println((nodeArr[4].getSigmoid()));
 			
 			
 			/*Continue Loop*/
