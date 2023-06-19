@@ -23,31 +23,25 @@ public class NeuralNetwork1 {
 			this.x = x;
 		}
 		
+		/*Setters and Getters*/
+		public int getX() { return this.x; }
+		public int getSigmoid() { return this.sigmoid; }
+		public void setSigmoid(int sigmoid) { this.sigmoid = sigmoid; }
+		
 		/*Methods*/
 		public int activation(int x1, int x2) {
 			z = this.weight*x1 + this.weight*x2 - bias; //activation function
 			return (int)Math.round((1/(1 + Math.exp(-1*z)))); //sigmoid function
 		}
 		
-		public int getX() {
-			return this.x;
-		}
-		
-		public int getSigmoid() {
-			return this.sigmoid;
-		}
-		
-		public void setSigmoid(int sigmoid) {
-			this.sigmoid = sigmoid;
-		}
-		
-	}
+	} //end of inner class
 
 	public static void main(String[] args) {
 		
 		/*Variables*/
 		String cont = ""; //continue
 		Scanner scan = new Scanner(System.in); //user input scanner
+		int j = 0;
 		
 		NeuralNetwork1 neural = new NeuralNetwork1();
 		int x1, x2; //value of input nodes 
@@ -57,10 +51,14 @@ public class NeuralNetwork1 {
 		Node Y = neural.new Node(20, 30);
 		
 		/*Build Neural Network*/
-		Node nodeArr[] = new Node[5]; //3D neural network
-		nodeArr[2] = h1;
-		nodeArr[3] = h2;
-		nodeArr[4] = Y;
+		Node inputLayer[] = new Node[2]; //input layer
+		//inputLayer[0] = X1;
+		//inputLayer[1] = X2;
+		Node hiddenLayer[] = new Node[2]; //hidden layer
+		hiddenLayer[0] = h1;
+		hiddenLayer[1] = h2;
+		Node outputLayer[] = new Node[1]; //output layer
+		outputLayer[0] = Y;
 		
 		/*Introduction*/
 		System.out.println("-- Welcome to the Logic AND Neural Network! --");
@@ -80,27 +78,22 @@ public class NeuralNetwork1 {
 			scan.nextLine();
 			X1 = neural.new Node(x1);
 			X2 = neural.new Node(x2);
-			nodeArr[0] = X1;
-			nodeArr[1] = X2;
-			
-			//input leyer array
-			//hidden layer array
-			//output array
+			inputLayer[0] = X1;
+			inputLayer[1] = X2;
 			
 			/*Forward Propagation*/
-			
-			nodeArr[2].setSigmoid(nodeArr[2].activation(nodeArr[0].getX(), nodeArr[1].getX()));
-			nodeArr[3].setSigmoid(nodeArr[3].activation(nodeArr[0].getX(), nodeArr[1].getX()));
-			nodeArr[4].setSigmoid(nodeArr[4].activation(nodeArr[2].getSigmoid(), nodeArr[3].getSigmoid()));
-			System.out.println((nodeArr[4].getSigmoid()));
-			
+			for(int i = 0; i < hiddenLayer.length; i++) {
+				j = (i == 1) ? 0 : 1;
+				hiddenLayer[i].setSigmoid(hiddenLayer[i].activation(inputLayer[i].getX(), inputLayer[j].getX())); //activation function
+			}
+			outputLayer[0].setSigmoid(outputLayer[0].activation(hiddenLayer[0].getSigmoid(), hiddenLayer[1].getSigmoid()));
+			System.out.println("The Output of the neural network is... " + outputLayer[0].getSigmoid());
 			
 			/*Continue Loop*/
 			System.out.print("\nContinue? (y/n) "); cont = scan.nextLine(); 
 		} while("y".compareToIgnoreCase(cont) == 0);
 		
-		
 		System.out.println("\n-- End of Program --");
-	}
+	} //end of driver
 
-}
+} //end of class
