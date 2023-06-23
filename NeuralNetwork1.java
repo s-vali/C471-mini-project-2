@@ -73,8 +73,8 @@ public class NeuralNetwork1 {
 		do {
 			/*Prompt User*/
 			System.out.println("\nInput any of the X (int) values found in the table to the neural network to obtain the appropriate output, ");
-			System.out.print(" x1: "); x1 = scan.nextInt();
-			System.out.print(" x2: "); x2 = scan.nextInt();
+			System.out.print(" X1: "); x1 = scan.nextInt();
+			System.out.print(" X2: "); x2 = scan.nextInt();
 			scan.nextLine();
 			X1 = neural.new Node(x1);
 			X2 = neural.new Node(x2);
